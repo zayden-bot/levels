@@ -1,0 +1,16 @@
+[package]
+name = "levels"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+zayden-core = { git = "https://github.com/zayden-bot/slash-command-core.git", branch = "master" }
+async-trait = { version = "*", default-features = false }
+sqlx = { version = "*", default-features = false, features = ["macros"] }
+serenity = { version = "*", default-features = false, features = [
+    "model",
+    "rustls_backend",
+] }
+chrono = { version = "*", default-features = false, features = ["now"] }
+futures = { version = "*", default-features = false }
+rand = { version = "*", default-features = false, features = ["thread_rng"] }
