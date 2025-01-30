@@ -55,6 +55,8 @@ pub trait LevelsManager<Db: Database> {
         total_xp: i32,
         level: i32,
     ) -> sqlx::Result<()>;
+
+    async fn save(pool: &Pool<Db>, id: impl Into<UserId> + Send) -> sqlx::Result<()>;
 }
 
 pub struct LevelsRow {
@@ -78,7 +80,7 @@ pub trait LevelsRoleManager<Db: Database> {
         pool: &Pool<Db>,
         guild_id: impl Into<GuildId> + Send,
         level: i32,
-    ) -> sqlx::Result<Vec<LevelRoleRow>>;
+    ) -> sqlx::Result<Option<LevelRoleRow>>;
 }
 
 pub struct LevelRoleRow {

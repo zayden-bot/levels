@@ -72,16 +72,10 @@ async fn update_member_roles<Db: Database, Manager: LevelsRoleManager<Db>>(
     guild_id: GuildId,
     level: i32,
 ) {
-    let rows = Manager::get(pool, guild_id, level).await.unwrap();
-
-    let highest_role = rows
-        .into_iter()
-        .filter(|row| row.level <= level)
-        .max_by_key(|row| row.level)
-        .unwrap();
-
-    ctx.http
-        .add_member_role(guild_id, message.author.id, highest_role.role_id(), None)
-        .await
-        .unwrap();
+    if let Some(row) = Manager::get(pool, guild_id, level).await.unwrap() {
+        ctx.http
+            .add_member_role(guild_id, message.author.id, row.role_id(), None)
+            .await
+            .unwrap();
+    }
 }
