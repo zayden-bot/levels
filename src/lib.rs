@@ -56,7 +56,7 @@ pub trait LevelsManager<Db: Database> {
         level: i32,
     ) -> sqlx::Result<()>;
 
-    async fn save(pool: &Pool<Db>, id: impl Into<UserId> + Send) -> sqlx::Result<()>;
+    async fn save(pool: &Pool<Db>, id: impl Into<UserId> + Send) -> sqlx::Result<LevelsRow>;
 }
 
 pub struct LevelsRow {

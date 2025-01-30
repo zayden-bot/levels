@@ -33,10 +33,10 @@ impl Levels {
             return Ok(());
         }
 
-        let row = Manager::get(pool, message.author.id)
-            .await
-            .unwrap()
-            .unwrap();
+        let row = match Manager::get(pool, message.author.id).await.unwrap() {
+            Some(row) => row,
+            None => Manager::save(pool, message.author.id).await.unwrap(),
+        };
 
         if row.last_xp >= (Utc::now().naive_utc() - TimeDelta::minutes(1)) {
             return Ok(());
