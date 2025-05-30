@@ -5,7 +5,7 @@ pub mod message_create;
 pub use message_create::message_create;
 
 pub mod sqlx_lib;
-pub use sqlx_lib::{LeaderboardRow, LevelStateRow, LevelsManager, LevelsRow, RankRow, XpRow};
+pub use sqlx_lib::{FullLevelRow, LeaderboardRow, LevelsManager, LevelsRow, RankRow, XpRow};
 
 #[inline(always)]
 pub const fn level_up_xp(level: i32) -> i32 {

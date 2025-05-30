@@ -28,11 +28,11 @@ pub trait LevelsManager<Db: Database> {
     async fn level_state_row(
         pool: &Pool<Db>,
         id: impl Into<UserId> + Send,
-    ) -> sqlx::Result<Option<LevelStateRow>>;
+    ) -> sqlx::Result<Option<FullLevelRow>>;
 
     async fn save_level_state_row(
         pool: &Pool<Db>,
-        row: LevelStateRow,
+        row: FullLevelRow,
     ) -> sqlx::Result<AnyQueryResult>;
 }
 
@@ -166,14 +166,16 @@ impl LevelsRow for XpRow {
 }
 
 #[derive(FromRow)]
-pub struct LevelStateRow {
+pub struct FullLevelRow {
+    pub id: i64,
     pub xp: i32,
     pub level: i32,
     pub total_xp: i64,
+    pub message_count: i64,
     pub last_xp: NaiveDateTime,
 }
 
-impl LevelStateRow {
+impl FullLevelRow {
     pub fn update_level(&mut self) -> Option<i32> {
         let next_level_xp = level_up_xp(self.level());
 
@@ -191,20 +193,22 @@ impl LevelStateRow {
     }
 }
 
-impl Default for LevelStateRow {
+impl Default for FullLevelRow {
     fn default() -> Self {
         Self {
+            id: 0,
             xp: 0,
             level: 1,
             total_xp: 0,
+            message_count: 0,
             last_xp: NaiveDateTime::default(),
         }
     }
 }
 
-impl LevelsRow for LevelStateRow {
+impl LevelsRow for FullLevelRow {
     fn user_id(&self) -> UserId {
-        unimplemented!()
+        UserId::new(self.id as u64)
     }
 
     fn xp(&self) -> i32 {
@@ -220,7 +224,7 @@ impl LevelsRow for LevelStateRow {
     }
 
     fn message_count(&self) -> i64 {
-        unimplemented!()
+        self.message_count
     }
 
     fn last_xp(&self) -> NaiveDateTime {
