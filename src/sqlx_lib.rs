@@ -15,16 +15,19 @@ pub trait LevelsManager<Db: Database> {
 
     async fn get_user_rank(
         pool: &Pool<Db>,
-        user_id: impl Into<UserId>,
+        user_id: impl Into<UserId> + Send,
     ) -> sqlx::Result<Option<i64>>;
 
-    async fn rank_row(pool: &Pool<Db>, id: impl Into<UserId>) -> sqlx::Result<Option<RankRow>>;
+    async fn rank_row(
+        pool: &Pool<Db>,
+        id: impl Into<UserId> + Send,
+    ) -> sqlx::Result<Option<RankRow>>;
 
-    async fn xp_row(pool: &Pool<Db>, id: impl Into<UserId>) -> sqlx::Result<Option<XpRow>>;
+    async fn xp_row(pool: &Pool<Db>, id: impl Into<UserId> + Send) -> sqlx::Result<Option<XpRow>>;
 
     async fn level_state_row(
         pool: &Pool<Db>,
-        id: impl Into<UserId>,
+        id: impl Into<UserId> + Send,
     ) -> sqlx::Result<Option<LevelStateRow>>;
 
     async fn save_level_state_row(
