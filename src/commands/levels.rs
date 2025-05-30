@@ -69,9 +69,7 @@ async fn run_components<Db: Database, Manager: LevelsManager<Db>>(
                 - 1
         }
         "user" => {
-            let Some(row_number) = Manager::get_user_rank(pool, interaction.user.id)
-                .await
-                .unwrap()
+            let Some(row_number) = Manager::user_rank(pool, interaction.user.id).await.unwrap()
             else {
                 return;
             };

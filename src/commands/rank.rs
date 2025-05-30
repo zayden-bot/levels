@@ -36,7 +36,7 @@ impl Commands {
         let level = row.level();
         let xp_for_next_level = level_up_xp(level);
 
-        let user_rank = match Manager::get_user_rank(pool, user.id).await.unwrap() {
+        let user_rank = match Manager::user_rank(pool, user.id).await.unwrap() {
             Some(rank) => format!("{rank}"),
             None => String::from("N/A"),
         };

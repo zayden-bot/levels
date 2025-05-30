@@ -13,7 +13,7 @@ pub trait LevelsManager<Db: Database> {
         page: i64,
     ) -> sqlx::Result<Vec<LeaderboardRow>>;
 
-    async fn get_user_rank(
+    async fn user_rank(
         pool: &Pool<Db>,
         user_id: impl Into<UserId> + Send,
     ) -> sqlx::Result<Option<i64>>;
@@ -25,15 +25,12 @@ pub trait LevelsManager<Db: Database> {
 
     async fn xp_row(pool: &Pool<Db>, id: impl Into<UserId> + Send) -> sqlx::Result<Option<XpRow>>;
 
-    async fn level_state_row(
+    async fn full_row(
         pool: &Pool<Db>,
         id: impl Into<UserId> + Send,
     ) -> sqlx::Result<Option<FullLevelRow>>;
 
-    async fn save_level_state_row(
-        pool: &Pool<Db>,
-        row: FullLevelRow,
-    ) -> sqlx::Result<AnyQueryResult>;
+    async fn save(pool: &Pool<Db>, row: FullLevelRow) -> sqlx::Result<AnyQueryResult>;
 }
 
 pub trait LevelsRow {

@@ -12,7 +12,7 @@ pub async fn message_create<Db: Database, Manager: LevelsManager<Db>>(
 ) -> Option<i32> {
     message.guild_id?;
 
-    let mut row = Manager::level_state_row(pool, message.author.id)
+    let mut row = Manager::full_row(pool, message.author.id)
         .await
         .unwrap()
         .unwrap_or_default();
@@ -25,7 +25,7 @@ pub async fn message_create<Db: Database, Manager: LevelsManager<Db>>(
 
     let new_level = row.update_level();
 
-    Manager::save_level_state_row(pool, row).await.unwrap();
+    Manager::save(pool, row).await.unwrap();
 
     new_level
 }
