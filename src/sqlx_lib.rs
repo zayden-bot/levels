@@ -52,10 +52,10 @@ pub trait LevelsRow {
 
 #[derive(FromRow)]
 pub struct LeaderboardRow {
-    id: i64,
-    xp: i32,
-    level: i32,
-    message_count: i64,
+    pub id: i64,
+    pub xp: i32,
+    pub level: i32,
+    pub message_count: i64,
 }
 
 impl LevelsRow for LeaderboardRow {
@@ -86,8 +86,8 @@ impl LevelsRow for LeaderboardRow {
 
 #[derive(FromRow)]
 pub struct RankRow {
-    xp: i32,
-    level: i32,
+    pub xp: i32,
+    pub level: i32,
 }
 
 impl Default for RankRow {
@@ -124,9 +124,9 @@ impl LevelsRow for RankRow {
 
 #[derive(FromRow)]
 pub struct XpRow {
-    xp: i32,
-    level: i32,
-    total_xp: i64,
+    pub xp: i32,
+    pub level: i32,
+    pub total_xp: i64,
 }
 
 impl Default for XpRow {
@@ -167,10 +167,10 @@ impl LevelsRow for XpRow {
 
 #[derive(FromRow)]
 pub struct LevelStateRow {
-    xp: i32,
-    level: i32,
-    total_xp: i64,
-    last_xp: NaiveDateTime,
+    pub xp: i32,
+    pub level: i32,
+    pub total_xp: i64,
+    pub last_xp: NaiveDateTime,
 }
 
 impl LevelStateRow {
