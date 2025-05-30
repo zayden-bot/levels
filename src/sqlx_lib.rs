@@ -171,7 +171,7 @@ pub struct LevelStateRow {
 }
 
 impl LevelStateRow {
-    pub fn update_level(&mut self) -> bool {
+    pub fn update_level(&mut self) -> Option<i32> {
         let next_level_xp = level_up_xp(self.level());
 
         let rand_xp = rand::random_range(15..25);
@@ -181,10 +181,10 @@ impl LevelStateRow {
         if self.xp >= next_level_xp {
             self.xp -= next_level_xp;
             self.level += 1;
-            return true;
+            return Some(self.level);
         };
 
-        false
+        None
     }
 }
 
