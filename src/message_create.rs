@@ -23,7 +23,7 @@ pub async fn message_create<Db: Database, Manager: LevelsManager<Db>>(
         return None;
     }
 
-    let new_level = row.update_level();
+    let new_level = row.new_message();
 
     Manager::save(pool, row).await.unwrap();
 

@@ -173,13 +173,14 @@ pub struct FullLevelRow {
 }
 
 impl FullLevelRow {
-    pub fn update_level(&mut self) -> Option<i32> {
-        let next_level_xp = level_up_xp(self.level());
+    pub fn new_message(&mut self) -> Option<i32> {
+        self.message_count += 1;
 
         let rand_xp = rand::random_range(15..25);
         self.total_xp += rand_xp as i64;
         self.xp += rand_xp;
 
+        let next_level_xp = level_up_xp(self.level());
         if self.xp >= next_level_xp {
             self.xp -= next_level_xp;
             self.level += 1;
