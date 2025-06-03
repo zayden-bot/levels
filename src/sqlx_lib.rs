@@ -173,6 +173,19 @@ pub struct FullLevelRow {
 }
 
 impl FullLevelRow {
+    pub fn new(id: impl Into<UserId>) -> Self {
+        let id = id.into();
+
+        Self {
+            id: id.get() as i64,
+            xp: 0,
+            level: 0,
+            total_xp: 0,
+            message_count: 0,
+            last_xp: NaiveDateTime::default(),
+        }
+    }
+
     pub fn new_message(&mut self) -> Option<i32> {
         self.message_count += 1;
 
@@ -188,19 +201,6 @@ impl FullLevelRow {
         };
 
         None
-    }
-}
-
-impl Default for FullLevelRow {
-    fn default() -> Self {
-        Self {
-            id: 0,
-            xp: 0,
-            level: 1,
-            total_xp: 0,
-            message_count: 0,
-            last_xp: NaiveDateTime::default(),
-        }
     }
 }
 
