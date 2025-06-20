@@ -125,7 +125,7 @@ async fn create_embed<Db: Database, Manager: LevelsManager<Db>>(
     let desc = rows
         .into_iter()
         .enumerate()
-        .map(|(i, row)| row_as_desc(&row, i))
+        .map(|(i, row)| row_as_desc(&row, i + (page_number as usize - 1) * 10))
         .collect::<Vec<_>>()
         .join("\n\n");
 
